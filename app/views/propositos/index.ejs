@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      async function apagar(id) {
+        await $.ajax({ url: `http://localhost:3000/propositos/${id}`, method: 'DELETE'})
+        location.reload()
+      }
+    </script>
+
+  </head>
+
+  <body>
+    <a href="./propositos/new">novo proposito</a>
+    <% for (let i = 0; i < propositos.length; i++) { %> 
+      <li> <%= propositos[i].name %> <button onclick="apagar(<%= propositos[i].id %>)"> Apagar </button> </li>
+    <% } %>
+  </body>
+</html>

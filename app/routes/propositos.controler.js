@@ -6,20 +6,21 @@ var router = express.Router();
 
 /* GET proposito index */
 router.get('/', async function(req, res, next) {
-  const propositos = await Proposito.findAll()
-  res.send(propositos);
+  const propositos = await Proposito.findAll({ raw: true })
+  console.log(propositos)
+  res.render('propositos/index', { propositos });
 });
 
 //POST create
 router.post('/', async function(req, res){
   let body = req.body;
   const proposito = await Proposito.create(body);
-  res.send(proposito);
+  res.redirect('/propositos');
 });
 
 //GET new
 router.get('/new', async function(req, res, next) {
-    res.send('Cadastro Proposito');
+    res.render('propositos/new');
 });
 
 //GET show
