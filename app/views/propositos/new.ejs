@@ -1,11 +1,41 @@
 <html>
+  <head>
+    <%- include('../shared/head.ejs') %>
+    <script src="./js/propositos/index.js"></script>
+  </head>
   <body>
-    <form action="/propositos" method="post">
-      <label for="name">Id</label>
-      <input type="text" name="id">
-      <label for="name">Nome</label>
-      <input type="text" name="name">
-      <input type="submit">
-    </form>
+    <%- include('../shared/nav.ejs') %>
+
+    <div class="container">
+      <form action="/propositos" method="post">
+        <%if (edit) { %>
+          <input type="hidden" name="edit" value="true">
+          <input type="hidden" name="id" value="<%= proposito.id %> ">
+        <% } %>
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome</label>
+          <%if (edit) { %>
+            <input type="text" class="form-control" id="nome" name="nome" placeholder="<%= proposito.nome %> ">
+          <% } else { %>
+            <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome">
+          <% }%>
+        </div>
+        <div class="mb-3">
+          <label for="descricao" class="form-label">Descrição</label>
+          <%if (edit) { %>
+            <textarea class="form-control" id="descricao" name="descricao" rows="3" placeholder="<%= proposito.descricao %>"></textarea>
+          <% } else { %>
+            <textarea class="form-control" id="descricao" name="descricao" rows="3" placeholder="Digite a descrição"></textarea>
+          <% }%>
+        </div>
+        <%if (edit) { %>
+          <button type="submit" class="btn btn-primary">Editar</button>
+        <% } else { %>
+          <button type="submit" class="btn btn-primary">Cadastrar</button>
+        <% }%>
+      </form>
+
+    </div>
+
   </body>
 </html>

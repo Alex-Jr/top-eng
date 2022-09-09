@@ -37,8 +37,11 @@
           <% for (let i = 0; i < propositos.length; i++) { %> 
             <tr>
               <th scope="row"><%= propositos[i].id %></th>
-              <td><%= propositos[i].name %></td>
-              <td><button onclick="apagar(<%= propositos[i].id %>)"> Apagar </button></td>
+              <td><%= propositos[i].nome %></td>
+              <td>
+                <a href="./propositos/<%= propositos[i].id %>/edit"><button type="button">Editar</button></a>
+                <button onclick="apagar(<%= propositos[i].id %>)"> Apagar </button> 
+              </td>
             </tr>
           <% } %>
       </table>

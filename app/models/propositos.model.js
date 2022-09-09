@@ -6,13 +6,18 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   const Proposito = sequelize.define("proposito", {
     id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true
     },
-    name: {
+    nome: {
       type: DataTypes.STRING,
       allowNull: false
-    }
+    }, 
+    descricao: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
   }, {
 
   });

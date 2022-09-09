@@ -2,64 +2,99 @@
 var express = require('express');
 const { Proposito } = require('../models');
 var router = express.Router();
+var crypto = require('crypto')
 
 
 /* GET proposito index */
 router.get('/', async function(req, res, next) {
-  const propositos = await Proposito.findAll({ raw: true })
-  console.log(propositos)
-  res.render('propositos/index', { propositos });
+  try {
+    const propositos = await Proposito.findAll({ raw: true, where: req.query })
+    res.render('propositos/index', { propositos });
+  } catch (err) {
+    console.log(err)
+    res.status(500).send(err)
+  }
 });
 
 //POST create
 router.post('/', async function(req, res){
-  let body = req.body;
-  const proposito = await Proposito.create(body);
-  res.redirect('/propositos');
+  try {
+    console.log(req.body)
+    if(req.body.edit === 'true') {
+      const proposito = await Proposito.findByPk(req.body.id);
+
+      const parsedBody = { ...req.body };
+
+      delete parsedBody.id;
+      delete parsedBody.edit;
+
+      await proposito.update(parsedBody);
+      res.redirect('/propositos');
+    } else {
+      const proposito = await Proposito.create(req.body);
+    
+      res.redirect('/propositos');
+    }
+  } catch (err) {
+    console.log(err)
+    res.status(500).send(err)
+  }
 });
 
 //GET new
 router.get('/new', async function(req, res, next) {
-    res.render('propositos/new');
+  try {
+    res.render('propositos/new', { edit: false });
+  } catch (err) {
+    console.log(err)
+    res.status(500).send(err)
+  }
 });
 
-//GET show
+//GET ID
 router.get('/:id', async function(req, res, next) {
-  const { id } = req.params;
-  const proposito = await Proposito.findByPk(id);
-  res.send(proposito);
+  try {
+    const { id } = req.params;
+    const proposito = await Proposito.findByPk(id);
+    res.send(proposito);
+  } catch (err) {
+    console.log(err)
+    res.status(500).send(err)
+  }
 });
 
 //GET Edit
 router.get('/:id/edit', async function(req, res, next) {
-  console.log(req.params.id)
-  res.send('Editar Proposito');
-  });
+  try {
+    console.log(req.params.id)
 
-//PUT Edit
-router.put('/:id', async function(req, res, next) {
-  const { 
-    params: {
-      id,
-    },
-    body,
-  } = req;
+    let id = req.params.id;
 
-  const proposito = await Proposito.findByPk(id);
+    const proposito = await Proposito.findByPk(id);
 
-  await proposito.update(body);
+    console.log(proposito);
 
-  res.send(proposito);
-  });
+    res.render('propositos/new', { proposito, edit: true });
+  } catch (err) {
+    console.log(err)
+    res.status(500).send(err)
+  }
+});
+
 
 //DELETE Delete
 router.delete('/:id', async function(req, res, next) {
-  const { id } = req.params;
-  const proposito = await Proposito.findByPk(id);
-
-  await proposito.destroy();
-
-  res.send(proposito);
-  });
+  try {
+    const { id } = req.params;
+    const proposito = await Proposito.findByPk(id);
+  
+    await proposito.destroy();
+  
+    res.send(proposito);
+  } catch (err) {
+    console.log(err)
+    res.status(500).send(err)
+  }
+});
 
 module.exports = router;
