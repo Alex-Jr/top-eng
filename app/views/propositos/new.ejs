@@ -14,28 +14,14 @@
         <% } %>
         <div class="mb-3">
           <label for="nome" class="form-label">Nome</label>
-          <%if (edit) { %>
-            <input type="text" class="form-control" id="nome" name="nome" placeholder="<%= proposito.nome %> ">
-          <% } else { %>
-            <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome">
-          <% }%>
+          <input type="text" class="form-control" id="nome" name="nome" placeholder="<%= edit ? proposito.nome : "Digite seu nome"  %> ">
         </div>
         <div class="mb-3">
           <label for="descricao" class="form-label">Descrição</label>
-          <%if (edit) { %>
-            <textarea class="form-control" id="descricao" name="descricao" rows="3" placeholder="<%= proposito.descricao %>"></textarea>
-          <% } else { %>
-            <textarea class="form-control" id="descricao" name="descricao" rows="3" placeholder="Digite a descrição"></textarea>
-          <% }%>
+          <textarea class="form-control" id="descricao" name="descricao" rows="3" placeholder="<%= edit ? proposito.descricao : "Digite seu descrição"  %>"></textarea>
         </div>
-        <%if (edit) { %>
-          <button type="submit" class="btn btn-primary">Editar</button>
-        <% } else { %>
-          <button type="submit" class="btn btn-primary">Cadastrar</button>
-        <% }%>
+        <button type="submit" class="btn btn-primary"><%= edit ? "Editar": "Cadastrar" %></button>
       </form>
-
     </div>
-
   </body>
 </html>
