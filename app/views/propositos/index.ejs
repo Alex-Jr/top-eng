@@ -2,11 +2,13 @@
   <head>
     <%- include('../shared/head.ejs') %>
     <script src="./js/propositos/index.js"></script>
+
   </head>
 
   <body>
+    <div class="d-flex ">
     <%- include('../shared/nav.ejs') %>
-    <div class="container">
+    <div class="container mt-5">
   
       <div class="row mt-4">
         <div class="col-md-6">
@@ -24,8 +26,8 @@
           <a href="./propositos/new"><button type="button" class="btn btn-primary">Novo Propósito</button></a>
         </div>
       </div>
-  
-      <table class="table mt-4">
+      <div class="table-responsive">
+      <table class="table">
         <thead>
           <tr>
             <th scope="col">Código</th>
@@ -39,13 +41,21 @@
               <th scope="row"><%= propositos[i].id %></th>
               <td><%= propositos[i].nome %></td>
               <td>
-                <a href="./propositos/<%= propositos[i].id %>/edit"><button type="button">Editar</button></a>
-                <button onclick="apagar(<%= propositos[i].id %>)"> Apagar </button> 
+
+                <a class="link-warning" href="./propositos/<%= propositos[i].id %>/edit">
+                  <i class="bi bi-pencil-square" ></i></a>
+                <a >
+                <i class="bi bi-trash3-fill" onclick="apagar(<%= propositos[i].id %>)"></i>
+              </a>
               </td>
             </tr>
           <% } %>
       </table>
+    </div>
+
+
 
     </div>
+  </div>
   </body>
 </html>
