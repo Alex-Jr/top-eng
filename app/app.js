@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var propositosRouter = require('./routes/propositos.controler');
+var geralRouter = require('./routes/geral.controler');
 const { sequelize } = require('./models');
 
 var app = express();
@@ -22,6 +23,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/propositos', propositosRouter);
+app.use('/geral', geralRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

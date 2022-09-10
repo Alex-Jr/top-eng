@@ -1,0 +1,87 @@
+<html>
+    <header>
+        <%- include('../shared/head.ejs') %>
+        <script src="./js/geral/tree_maker.js"></script>
+        <link rel="stylesheet" href="./css/geral/tree_maker.css">
+    
+    </header>
+    <body>
+        
+    <script>
+        const myjson = {
+            proposito: {
+                nome: 'alex',
+                diretrizes: [{
+                    nome: 'caio',
+                    objetivos: [
+                        {
+                            nome: 'usl',
+                            indicadores: [{
+                                nome: 'paçoca'
+                            }]
+                        },
+                        {
+                            nome: 'felps'
+                        }
+                    ],
+                },{ 
+                    nome: 'rpd' 
+                } ]
+            },
+        }
+        let i = 2;
+
+        let treee = { 1: { }};
+        let treeeeParams = { 1 : { trad: myjson.proposito.nome } };
+
+        myjson.proposito.diretrizes.forEach((diretriz) => { 
+            if(diretriz.objetivos) {
+                Object.assign(treee[1], { [i]: { }})
+                const diretrizIndex = i;
+                treeeeParams[i] = { trad: diretriz.nome };
+                i++;
+    
+                diretriz.objetivos.forEach((objetivo) => {
+                    if(objetivo.indicadores) {
+                        Object.assign(treee[1][diretrizIndex], { [i]: { }})
+                        const objetivoIndex = i;
+                        treeeeParams[i] = { trad: objetivo.nome };
+                        i++;
+        
+                        objetivo.indicadores.forEach((indicador) => {
+                            treee[1][diretrizIndex][objetivoIndex][i] = ''
+                            treeeeParams[i] = { trad: indicador.nome };
+                            i++;
+                        })
+                    } else {
+                        Object.assign(treee[1][diretrizIndex], { [i]: ''})
+                        treeeeParams[i] = { trad: objetivo.nome};
+                        i++;
+                    }
+                })
+            } else {
+                Object.assign(treee[1], { [i]: ''})
+                treeeeParams[i] = { trad: diretriz.nome};
+                i++;
+            }
+        })
+
+        console.log(treee);
+        console.log(treeeeParams)
+    
+
+        window.addEventListener('load', function () {
+            treeMaker(treee, {
+                id: 'myTree',
+                treeParams: treeeeParams,
+                card_click: function (element) {
+                    console.log(element);
+                }
+            })
+        })
+    
+    </script>
+    <%- include('../shared/nav.ejs') %>
+    <div id="myTree"></div>
+    </body>
+</html>
