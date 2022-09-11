@@ -1,3 +1,19 @@
-body {
-  background-color: aqua;
+
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+th, td {
+  font-size: 24px;
+}
+.icons {
+
+}
+.delete-icon {
+  color: red;
+}
+.edit-icon {
+  color: red;
 }
