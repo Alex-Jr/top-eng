@@ -36,5 +36,6 @@ module.exports = {
   sequelize,
   Proposito,
   Diretriz,
-  Objetivo
+  Objetivo,
+  Indicador
 }

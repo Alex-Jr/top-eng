@@ -7,6 +7,8 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var propositosRouter = require('./routes/propositos.controler');
 var diretrizesRouter = require('./routes/diretrizes.controler');
+var objetivosRouter = require('./routes/objetivos.controler');
+var indicadorRouter = require('./routes/indicadores.controler');
 var geralRouter = require('./routes/geral.controler');
 const { sequelize } = require('./models');
 
@@ -25,6 +27,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/propositos', propositosRouter);
 app.use('/diretrizes', diretrizesRouter)
+app.use('/objetivos', objetivosRouter);
+app.use('/indicadores', indicadorRouter)
 app.use('/geral', geralRouter);
 
 

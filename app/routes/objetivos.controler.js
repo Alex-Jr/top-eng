@@ -1,6 +1,6 @@
 
 var express = require('express');
-const { Objetivo } = require('../models');
+const { Objetivo, Indicador } = require('../models');
 var router = express.Router();
 var crypto = require('crypto')
 
@@ -55,7 +55,7 @@ router.get('/new', async function(req, res, next) {
 router.get('/:id', async function(req, res, next) {
   try {
     const { id } = req.params;
-    const objetivo = await Objetivo.findByPk(id);
+    const objetivo = await Objetivo.findByPk(id, {include: { model: Indicador }});
     res.send(objetivo);
   } catch (err) {
     console.log(err)

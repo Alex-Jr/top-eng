@@ -1,40 +1,55 @@
 <html>
     <header>
         <%- include('../shared/head.ejs') %>
-        <script src="./js/geral/tree_maker.js"></script>
-        <link rel="stylesheet" href="./css/geral/tree_maker.css">
+        <script src="/js/geral/tree_maker.js"></script>
+        <link rel="stylesheet" href="/css/geral/tree_maker.css">
     
     </header>
     <body>
+    <script type='text/javascript'>
+        var proposito =<%-JSON.stringify(proposito)%>
+    </script>
         
     <script>
-        const myjson = {
-            proposito: {
-                nome: 'alex',
-                diretrizes: [{
-                    nome: 'caio',
-                    objetivos: [
+        console.log(proposito)
+        // format to match
+        let myjson = {
+            "proposito":{
+                "nome":"alex",
+                "diretrizs":[
+                    {
+                        "nome":"caio",
+                        "objetivos":[
                         {
-                            nome: 'usl',
-                            indicadores: [{
-                                nome: 'paçoca'
-                            }]
+                            "nome":"usl",
+                            "indicadors":[
+                                {
+                                    "nome":"paçoca"
+                                }
+                            ]
                         },
                         {
-                            nome: 'felps'
+                            "nome":"felps"
                         }
-                    ],
-                },{ 
-                    nome: 'rpd' 
-                } ]
-            },
+                        ]
+                    },
+                    {
+                        "nome":"rpd"
+                    }
+                ]
+            }
         }
+
+        myjson = {
+            proposito
+        }
+
         let i = 2;
 
         let treee = { 1: { }};
         let treeeeParams = { 1 : { trad: myjson.proposito.nome } };
 
-        myjson.proposito.diretrizes.forEach((diretriz) => { 
+        myjson.proposito.diretrizs.forEach((diretriz) => { 
             if(diretriz.objetivos) {
                 Object.assign(treee[1], { [i]: { }})
                 const diretrizIndex = i;
@@ -42,13 +57,13 @@
                 i++;
     
                 diretriz.objetivos.forEach((objetivo) => {
-                    if(objetivo.indicadores) {
+                    if(objetivo.indicadors) {
                         Object.assign(treee[1][diretrizIndex], { [i]: { }})
                         const objetivoIndex = i;
                         treeeeParams[i] = { trad: objetivo.nome };
                         i++;
         
-                        objetivo.indicadores.forEach((indicador) => {
+                        objetivo.indicadors.forEach((indicador) => {
                             treee[1][diretrizIndex][objetivoIndex][i] = ''
                             treeeeParams[i] = { trad: indicador.nome };
                             i++;
@@ -82,6 +97,8 @@
     
     </script>
     <%- include('../shared/nav.ejs') %>
-    <div id="myTree"></div>
+    <div class="container">
+        <div id="myTree"></div>
+    </div>
     </body>
 </html>

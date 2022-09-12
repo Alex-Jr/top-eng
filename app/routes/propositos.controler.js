@@ -1,6 +1,6 @@
 
 var express = require('express');
-const { Proposito, Diretriz, Objetivo } = require('../models');
+const { Proposito, Diretriz, Objetivo, Indicador } = require('../models');
 var router = express.Router();
 var crypto = require('crypto')
 
@@ -62,6 +62,19 @@ router.get('/:id', async function(req, res, next) {
     res.status(500).send(err)
   }
 });
+
+//GET ID
+router.get('/:id/geral', async function(req, res, next) {
+  try {
+    const { id } = req.params;
+    const proposito = await Proposito.findByPk(id, { include: { all: true, nested: true }});;
+    res.render('geral', { proposito });
+  } catch (err) {
+    console.log(err)
+    res.status(500).send(err)
+  }
+});
+
 
 //GET Edit
 router.get('/:id/edit', async function(req, res, next) {
