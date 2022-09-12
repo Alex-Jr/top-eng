@@ -1,15 +1,15 @@
 
 var express = require('express');
-const { Diretriz } = require('../models');
+const { Indicador } = require('../models');
 var router = express.Router();
 var crypto = require('crypto')
 
 
-/* GET diretriz index */
+/* GET indicador index */
 router.get('/', async function(req, res, next) {
   try {
-    const diretrizes = await Diretriz.findAll({ raw: true, where: req.query })
-    res.render('diretrizes/index', { diretrizes });
+    const indicadores = await Indicador.findAll({ raw: true, where: req.query })
+    res.render('indicadores/index', { indicadores });
   } catch (err) {
     console.log(err)
     res.status(500).send(err)
@@ -21,19 +21,19 @@ router.post('/', async function(req, res){
   try {
     console.log(req.body)
     if(req.body.edit === 'true') {
-      const diretriz = await Diretriz.findByPk(req.body.id);
+      const indicador = await Indicador.findByPk(req.body.id);
 
       const parsedBody = { ...req.body };
 
       delete parsedBody.id;
       delete parsedBody.edit;
 
-      await diretriz.update(parsedBody);
-      res.redirect('/diretrizes');
+      await indicador.update(parsedBody);
+      res.redirect('/indicadores');
     } else {
-      const diretriz = await Diretriz.create(req.body);
+      const indicador = await Indicador.create(req.body);
     
-      res.redirect('/diretrizes');
+      res.redirect('/indicadores');
     }
   } catch (err) {
     console.log(err)
@@ -44,7 +44,7 @@ router.post('/', async function(req, res){
 //GET new
 router.get('/new', async function(req, res, next) {
   try {
-    res.render('diretrizes/new', { edit: false });
+    res.render('indicadores/new', { edit: false });
   } catch (err) {
     console.log(err)
     res.status(500).send(err)
@@ -55,8 +55,8 @@ router.get('/new', async function(req, res, next) {
 router.get('/:id', async function(req, res, next) {
   try {
     const { id } = req.params;
-    const diretriz = await Diretriz.findByPk(id);
-    res.send(diretriz);
+    const indicador = await Indicador.findByPk(id);
+    res.send(indicador);
   } catch (err) {
     console.log(err)
     res.status(500).send(err)
@@ -70,11 +70,11 @@ router.get('/:id/edit', async function(req, res, next) {
 
     let id = req.params.id;
 
-    const diretriz = await Diretriz.findByPk(id);
+    const indicador = await Indicador.findByPk(id);
 
-    console.log(diretriz);
+    console.log(indicador);
 
-    res.render('diretrizes/new', { diretriz, edit: true });
+    res.render('indicadores/new', { indicador, edit: true });
   } catch (err) {
     console.log(err)
     res.status(500).send(err)
@@ -86,11 +86,11 @@ router.get('/:id/edit', async function(req, res, next) {
 router.delete('/:id', async function(req, res, next) {
   try {
     const { id } = req.params;
-    const diretriz = await Diretriz.findByPk(id);
+    const indicador = await Indicador.findByPk(id);
   
-    await diretriz.destroy();
+    await indicador.destroy();
   
-    res.send(diretriz);
+    res.send(indicador);
   } catch (err) {
     console.log(err)
     res.status(500).send(err)

@@ -1,15 +1,15 @@
 
 var express = require('express');
-const { Diretriz } = require('../models');
+const { Objetivo } = require('../models');
 var router = express.Router();
 var crypto = require('crypto')
 
 
-/* GET diretriz index */
+/* GET objetivo index */
 router.get('/', async function(req, res, next) {
   try {
-    const diretrizes = await Diretriz.findAll({ raw: true, where: req.query })
-    res.render('diretrizes/index', { diretrizes });
+    const objetivos = await Objetivo.findAll({ raw: true, where: req.query })
+    res.render('objetivos/index', { objetivos });
   } catch (err) {
     console.log(err)
     res.status(500).send(err)
@@ -21,19 +21,19 @@ router.post('/', async function(req, res){
   try {
     console.log(req.body)
     if(req.body.edit === 'true') {
-      const diretriz = await Diretriz.findByPk(req.body.id);
+      const objetivo = await Objetivo.findByPk(req.body.id);
 
       const parsedBody = { ...req.body };
 
       delete parsedBody.id;
       delete parsedBody.edit;
 
-      await diretriz.update(parsedBody);
-      res.redirect('/diretrizes');
+      await objetivo.update(parsedBody);
+      res.redirect('/objetivos');
     } else {
-      const diretriz = await Diretriz.create(req.body);
+      const objetivo = await Objetivo.create(req.body);
     
-      res.redirect('/diretrizes');
+      res.redirect('/objetivos');
     }
   } catch (err) {
     console.log(err)
@@ -44,7 +44,7 @@ router.post('/', async function(req, res){
 //GET new
 router.get('/new', async function(req, res, next) {
   try {
-    res.render('diretrizes/new', { edit: false });
+    res.render('objetivos/new', { edit: false });
   } catch (err) {
     console.log(err)
     res.status(500).send(err)
@@ -55,8 +55,8 @@ router.get('/new', async function(req, res, next) {
 router.get('/:id', async function(req, res, next) {
   try {
     const { id } = req.params;
-    const diretriz = await Diretriz.findByPk(id);
-    res.send(diretriz);
+    const objetivo = await Objetivo.findByPk(id);
+    res.send(objetivo);
   } catch (err) {
     console.log(err)
     res.status(500).send(err)
@@ -70,11 +70,11 @@ router.get('/:id/edit', async function(req, res, next) {
 
     let id = req.params.id;
 
-    const diretriz = await Diretriz.findByPk(id);
+    const objetivo = await Objetivo.findByPk(id);
 
-    console.log(diretriz);
+    console.log(objetivo);
 
-    res.render('diretrizes/new', { diretriz, edit: true });
+    res.render('objetivos/new', { objetivo, edit: true });
   } catch (err) {
     console.log(err)
     res.status(500).send(err)
@@ -86,11 +86,11 @@ router.get('/:id/edit', async function(req, res, next) {
 router.delete('/:id', async function(req, res, next) {
   try {
     const { id } = req.params;
-    const diretriz = await Diretriz.findByPk(id);
+    const objetivo = await Objetivo.findByPk(id);
   
-    await diretriz.destroy();
+    await objetivo.destroy();
   
-    res.send(diretriz);
+    res.send(objetivo);
   } catch (err) {
     console.log(err)
     res.status(500).send(err)
