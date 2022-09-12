@@ -1,6 +1,6 @@
 
 var express = require('express');
-const { Proposito, Diretriz, Objetivo } = require('../models');
+const { Proposito } = require('../models');
 var router = express.Router();
 var crypto = require('crypto')
 
@@ -55,7 +55,7 @@ router.get('/new', async function(req, res, next) {
 router.get('/:id', async function(req, res, next) {
   try {
     const { id } = req.params;
-    const proposito = await Proposito.findByPk(id, { include: { model: Diretriz, include: { model: Objetivo } }});
+    const proposito = await Proposito.findByPk(id);
     res.send(proposito);
   } catch (err) {
     console.log(err)

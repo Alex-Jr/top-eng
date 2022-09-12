@@ -9,12 +9,32 @@ const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: './database/dev-db.sqlite',
-  logging: console.log
+  logging: console.log,
+  define: {
+    freezeTableName: true
+  }
 });
 
 const Proposito = require(`./propositos.model`)(sequelize);
+const Diretriz = require(`./diretrizes.model`)(sequelize);
+const Objetivo = require(`./objetivos.model`)(sequelize);
+const Indicador = require(`./indicadores.model`)(sequelize);
+
+// this is bad but here we are
+Proposito.hasMany(Diretriz)
+Diretriz.belongsTo(Proposito)
+
+// // should be n to n, but its 1 to n because its simple
+Diretriz.hasMany(Objetivo);
+Objetivo.belongsTo(Diretriz);
+
+// // should be n to n, but its 1 to n because its simple
+Objetivo.hasMany(Indicador);
+Indicador.belongsTo(Objetivo);
 
 module.exports = {
   sequelize,
-  Proposito
+  Proposito,
+  Diretriz,
+  Objetivo
 }
