@@ -1,6 +1,6 @@
 
 var express = require('express');
-const { Indicador } = require('../models');
+const { Indicador, Objetivo } = require('../models');
 var router = express.Router();
 var crypto = require('crypto')
 
@@ -44,7 +44,8 @@ router.post('/', async function(req, res){
 //GET new
 router.get('/new', async function(req, res, next) {
   try {
-    res.render('indicadores/new', { edit: false });
+    const objetivos = await Objetivo.findAll();
+    res.render('indicadores/new', { objetivos, edit: false });
   } catch (err) {
     console.log(err)
     res.status(500).send(err)
@@ -74,7 +75,9 @@ router.get('/:id/edit', async function(req, res, next) {
 
     console.log(indicador);
 
-    res.render('indicadores/new', { indicador, edit: true });
+    const objetivos = await Objetivo.findAll();
+
+    res.render('indicadores/new', { objetivos, indicador, edit: true });
   } catch (err) {
     console.log(err)
     res.status(500).send(err)
