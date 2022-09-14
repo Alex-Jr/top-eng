@@ -47,36 +47,36 @@
         let i = 2;
 
         let treee = { 1: { }};
-        let treeeeParams = { 1 : { trad: myjson.proposito.nome } };
+        let treeeeParams = { 1 : { trad: myjson.proposito.nome, type: 'propositos', id:  myjson.proposito.id} };
 
         myjson.proposito.diretrizs.forEach((diretriz) => { 
             if(diretriz.objetivos) {
                 Object.assign(treee[1], { [i]: { }})
                 const diretrizIndex = i;
-                treeeeParams[i] = { trad: diretriz.nome };
+                treeeeParams[i] = { trad: diretriz.nome, type: 'diretrizes', id: diretriz.id };
                 i++;
     
                 diretriz.objetivos.forEach((objetivo) => {
                     if(objetivo.indicadors) {
                         Object.assign(treee[1][diretrizIndex], { [i]: { }})
                         const objetivoIndex = i;
-                        treeeeParams[i] = { trad: objetivo.nome };
+                        treeeeParams[i] = { trad: objetivo.nome, type: 'objetivos', id: objetivo.id };
                         i++;
         
                         objetivo.indicadors.forEach((indicador) => {
                             treee[1][diretrizIndex][objetivoIndex][i] = ''
-                            treeeeParams[i] = { trad: indicador.nome };
+                            treeeeParams[i] = { trad: indicador.nome, type: 'indicadores', id: indicador.id };
                             i++;
                         })
                     } else {
                         Object.assign(treee[1][diretrizIndex], { [i]: ''})
-                        treeeeParams[i] = { trad: objetivo.nome};
+                        treeeeParams[i] = { trad: objetivo.nome, type: 'objetivos', id: objetivo.id};
                         i++;
                     }
                 })
             } else {
                 Object.assign(treee[1], { [i]: ''})
-                treeeeParams[i] = { trad: diretriz.nome};
+                treeeeParams[i] = { trad: diretriz.nome, type: 'diretrizes', id: diretriz.id};
                 i++;
             }
         })
@@ -89,11 +89,19 @@
             treeMaker(treee, {
                 id: 'myTree',
                 treeParams: treeeeParams,
-                card_click: function (element) {
-                    console.log(element);
-                }
+                // card_click: function (element) {
+                //     console.log(element);
+                // }
             })
+            const elms = $('.tree__container__step__card__p');
+    
+            for(let i = 0; i < elms.length; i++) {
+                elms[i].addEventListener('click', (el) => {
+                    window.location.replace(`http://localhost:3000/${treeeeParams[i + 1].type}/${treeeeParams[i + 1].id}/edit?proposito=${myjson.proposito.id}`);
+                })
+            }
         })
+
     
     </script>
     <div class="d-flex ">

@@ -29,7 +29,8 @@ router.post('/', async function(req, res){
       delete parsedBody.edit;
 
       await proposito.update(parsedBody);
-      res.redirect('/propositos');
+      const pId = req.query.proposito;
+      res.redirect(pId ? `/propositos/${pId}/geral` : '/propositos');
     } else {
       const proposito = await Proposito.create(req.body);
     

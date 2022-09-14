@@ -29,7 +29,8 @@ router.post('/', async function(req, res){
       delete parsedBody.edit;
 
       await indicador.update(parsedBody);
-      res.redirect('/indicadores');
+      const pId = req.query.proposito;
+      res.redirect(pId ? `/propositos/${pId}/geral` : '/indicadores');
     } else {
       const indicador = await Indicador.create(req.body);
     
