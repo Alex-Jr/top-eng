@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <%- include('../shared/head.ejs') %>
+    <script src="./js/objetivos/index.js"></script>
+
+  </head>
+
+  <body>
+    <div class="d-flex ">
+    <%- include('../shared/nav.ejs') %>
+    <div class="container mt-5">
+  
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <p class="fs-2">Lista de objetivos</p>
+        </div>
+
+        <div class="col-md-4">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="nome" id="busca">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="buscar(this)">Buscar</button>
+          </div>
+        </div>
+        
+        <div class="col-md-2">
+          <a href="./objetivos/new"><button type="button" class="btn btn-primary">Novo Propósito</button></a>
+        </div>
+      </div>
+      <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Código</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let i = 0; i < objetivos.length; i++) { %> 
+            <tr>
+              <th scope="row"><%= objetivos[i].id %></th>
+              <td><%= objetivos[i].nome %></td>
+              <td>
+
+                <a class="link-warning" href="./objetivos/<%= objetivos[i].id %>/edit">
+                  <i class="bi bi-pencil-square " ></i></a>
+                <a >
+                <i class="bi bi-trash3-fill icons text-danger" onclick="apagar(<%= objetivos[i].id %>)"></i>
+              </a>
+              </td>
+            </tr>
+          <% } %>
+      </table>
+    </div>
+
+
+
+    </div>
+  </div>
+  </body>
+</html>

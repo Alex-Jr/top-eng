@@ -1,6 +1,6 @@
 
 var express = require('express');
-const { Objetivo, Indicador } = require('../models');
+const { Objetivo, Indicador, Diretriz } = require('../models');
 var router = express.Router();
 var crypto = require('crypto')
 
@@ -44,7 +44,8 @@ router.post('/', async function(req, res){
 //GET new
 router.get('/new', async function(req, res, next) {
   try {
-    res.render('objetivos/new', { edit: false });
+    const diretrizes = await Diretriz.findAll();
+    res.render('objetivos/new', { diretrizes, edit: false });
   } catch (err) {
     console.log(err)
     res.status(500).send(err)
@@ -74,7 +75,9 @@ router.get('/:id/edit', async function(req, res, next) {
 
     console.log(objetivo);
 
-    res.render('objetivos/new', { objetivo, edit: true });
+    const diretrizes = await Diretriz.findAll();
+
+    res.render('objetivos/new', { diretrizes, objetivo, edit: true });
   } catch (err) {
     console.log(err)
     res.status(500).send(err)
