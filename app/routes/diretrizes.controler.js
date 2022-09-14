@@ -1,6 +1,6 @@
 
 var express = require('express');
-const { Diretriz } = require('../models');
+const { Diretriz, Proposito } = require('../models');
 var router = express.Router();
 var crypto = require('crypto')
 
@@ -44,7 +44,8 @@ router.post('/', async function(req, res){
 //GET new
 router.get('/new', async function(req, res, next) {
   try {
-    res.render('diretrizes/new', { edit: false });
+    const propositos = await Proposito.findAll();
+    res.render('diretrizes/new', { propositos, edit: false });
   } catch (err) {
     console.log(err)
     res.status(500).send(err)
@@ -72,9 +73,11 @@ router.get('/:id/edit', async function(req, res, next) {
 
     const diretriz = await Diretriz.findByPk(id);
 
+    const propositos = await Proposito.findAll();
+
     console.log(diretriz);
 
-    res.render('diretrizes/new', { diretriz, edit: true });
+    res.render('diretrizes/new', { propositos, diretriz, edit: true });
   } catch (err) {
     console.log(err)
     res.status(500).send(err)

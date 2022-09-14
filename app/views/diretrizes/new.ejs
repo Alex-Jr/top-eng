@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <%- include('../shared/head.ejs') %>
+    <script src="./js/diretrizes/index.js"></script>
+  </head>
+  <body>
+    <div class="d-flex ">
+    <%- include('../shared/nav.ejs') %>
+
+    <div class="container mt-5">
+      <form action="/diretrizes" method="post">
+        <%if (edit) { %>
+          <input type="hidden" name="edit" value="true">
+          <input type="hidden" name="id" value="<%= diretriz.id %> ">
+        <% } %>
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome</label>
+          <input type="text" class="form-control" id="nome" name="nome" placeholder="<%= edit ? diretriz.nome : "Digite seu nome"  %> ">
+        </div>
+        <div class="mb-3">
+          <label for="descricao" class="form-label">Descrição</label>
+          <textarea class="form-control" id="descricao" name="descricao" rows="3" placeholder="<%= edit ? diretriz.descricao : "Digite seu descrição"  %>"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="propositos" class="form-label">Proposito Associado</label>
+          <select class="form-select" name="propositoId">
+            <% for (let i = 0; i < propositos.length; i++) { %> 
+              <option value="<%= propositos[i].id %>"> <%= propositos[i].id %> - <%= propositos[i].nome %> </option>
+            <% } %> 
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary"><%= edit ? "Editar": "Cadastrar" %></button>
+      </form>
+    </div>
+  </div>
+  </body>
+</html>
