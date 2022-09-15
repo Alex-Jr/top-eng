@@ -10,11 +10,19 @@ module.exports = (sequelize) => {
       autoIncrement: true,
       primaryKey: true
     },
+    descricao: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }, 
     nome: {
       type: DataTypes.STRING,
       allowNull: false
     }, 
     sinonimo: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    fonte: {
       type: DataTypes.STRING,
       allowNull: true
     },
@@ -27,10 +35,6 @@ module.exports = (sequelize) => {
       allowNull: true
     },
     nocao: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
-    classificacao: {
       type: DataTypes.STRING,
       allowNull: true
     },

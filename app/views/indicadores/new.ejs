@@ -1,37 +1,99 @@
 <html>
-  <head>
-    <%- include('../shared/head.ejs') %>
+
+<head>
+  <%- include('../shared/head.ejs') %>
     <script src="./js/indicadores/index.js"></script>
-  </head>
-  <body>
-    <div class="d-flex ">
+</head>
+
+<body>
+  <div class="d-flex ">
     <%- include('../shared/nav.ejs') %>
 
-    <div class="container mt-5">
-      <form id="edit-create-form" action="/indicadores" method="post">
-        <%if (edit) { %>
-          <input type="hidden" name="edit" value="true">
-          <input type="hidden" name="id" value="<%= indicador.id %> ">
-        <% } %>
-        <div class="mb-3">
-          <label for="nome" class="form-label">Nome</label>
-          <input type="text" class="form-control" id="nome" name="nome" placeholder="<%= edit ? indicador.nome : "Digite seu nome"  %> ">
-        </div>
-        <div class="mb-3">
-          <label for="descricao" class="form-label">Descrição</label>
-          <textarea class="form-control" id="descricao" name="descricao" rows="3" placeholder="<%= edit ? indicador.descricao : "Digite seu descrição"  %>"></textarea>
-        </div>
-        <div class="mb-3">
-          <label for="objetivos" class="form-label">Objetivo Associado</label>
-          <select class="form-select" name="objetivoId">
-            <% for (let i = 0; i < objetivos.length; i++) { %> 
-              <option value="<%= objetivos[i].id %>"> <%= objetivos[i].id %> - <%= objetivos[i].nome %> </option>
-            <% } %> 
-          </select>
-        </div>
-        <button type="submit" class="btn btn-primary"><%= edit ? "Editar": "Cadastrar" %></button>
-      </form>
-    </div>
+      <div class="container mt-5">
+        <form id="edit-create-form" action="/indicadores" method="post">
+          <%if (edit) { %>
+            <input type="hidden" name="edit" value="true">
+            <input type="hidden" name="id" value="<%= indicador.id %> ">
+            <% } %>
+              <div class="mb-3">
+                <label for="nome" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="nome" name="nome" required
+                  placeholder="<%= edit ? indicador.nome : " Digite seu nome" %> ">
+              </div>
+              <div class="mb-3">
+                <label for="nocao" class="form-label">Noção</label>
+                <input type="text" class="form-control" id="descricao" name="nocao" rows="3" required
+                  placeholder="<%= edit ? indicador.nocao : " Digite sua noção" %>"></input>
+              </div>
+              <div class="mb-3">
+                <label for="impacto" class="form-label">Impacto</label>
+                <textarea class="form-control" id="impacto" name="impacto" rows="3" required
+                  placeholder="<%= edit ? indicador.impacto : " Digite seu impacto" %>"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="sinonimo" class="form-label">Sinonimo</label>
+                <input type="text" class="form-control" id="sinonimo" name="sinonimo" required
+                  placeholder="<%= edit ? indicador.sinonimo : " Digite seu sinonimo" %>"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="fonte" class="form-label">Fonte</label>
+                <input type="text" class="form-control" id="fonte" name="fonte" required
+                  placeholder="<%= edit ? indicador.fonte : " Digite sua fonte" %>"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="tipo" class="form-label">Tipo</label>
+                <select class="form-select" required name="tipo">
+                  <option disabled selected>Escolha um tipo</option>
+                  <option value="desempenho">Desempenho</option>
+                  <option value="seguranca">Segurança</option>
+                  <option value="qualidade">Qualidade</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="formato" class="form-label">Formato</label>
+                <select class="form-select" required name="formato">
+                  <option disabled selected>Escolha um Formato</option>
+                  <option value="numerico">Númerico</option>
+                  <option value="texto">Texto</option>
+                  <option value="booleana">Booleana</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="descricao" class="form-label">Restrição</label>
+                <input class="form-control" id="descricao" name="descricao" rows="3" required
+                  placeholder="<%= edit ? indicador.descricao : " Digite seu descrição" %>"></input>
+              </div>
+
+              <div class="mb-3">
+                <label for="calcular" class="form-label">Como calcular</label>
+                <textarea class="form-control" id="descricao" name="calculo" rows="3" required
+                  placeholder="<%= edit ? indicador.calculo : " Digite como calcular" %>"></textarea>
+              </div>
+
+
+              <div class="mb-3">
+                <label for="analisar" class="form-label">Como analisar</label>
+                <textarea class="form-control" id="analisar" name="analise" rows="3" required
+                  placeholder="<%= edit ? indicador.analise : " Digite como analisar" %>"></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label for="objetivos" class="form-label">Objetivo Associado</label>
+                <select class="form-select" required name="objetivoId">
+                  <option disabled selected>Escolha um Objetivo Associado</option>
+                  <% for (let i=0; i < objetivos.length; i++) { %>
+                    <option value="<%= objetivos[i].id %>">
+                      <%= objetivos[i].id %> - <%= objetivos[i].nome %>
+                    </option>
+                    <% } %>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary">
+                <%= edit ? "Editar" : "Cadastrar" %>
+              </button>
+        </form>
+      </div>
   </div>
-  </body>
+</body>
+
 </html>
